@@ -1,0 +1,44 @@
+
+npm i --save-dev typescript @types/express
+
+---Install the TypeScript compiler globally:
+npm install typescript@latest -g
+
+
+---Compiles TypeScript files to JavaScript
+---Executes node with the JavaScript version of the file
+npm install -g ts-node
+
+--Run TS app
+ts-node app.ts
+
+---Run TS app in demon mode.
+nodemon app.ts
+
+---Environment variables (doten library).
+npm install dotenv
+
+
+npm install uuid
+npm install @types/uuid --save-dev
+
+npm install cors
+npm install @types/cors --save-dev
+
+npm install helmet
+npm install @types/helmet --save-dev
+
+npm install mysql
+npm install @types/mysql --save-dev
+
+
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2"
+  },
+
+  
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "typescript": "^5.3.3"
+  }
