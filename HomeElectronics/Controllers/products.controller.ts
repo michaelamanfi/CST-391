@@ -1,6 +1,5 @@
 // Import required modules and types
 import { Request, RequestHandler, Response } from 'express';
-import { Product } from '../Models/products.model';
 import * as ProductDao from '../DAO/products.dao'
 import { OkPacket } from 'mysql';
 
@@ -10,7 +9,7 @@ export const readProducts: RequestHandler = async (req: Request, res: Response) 
     let products;
     let productId = parseInt(req.query.productId as string);
 
-    console.log('productId', productId);
+    console.log('productId', productId); 
 
     // Check if productId is a valid number, if not, read all products
     if (Number.isNaN(productId)) {
@@ -27,7 +26,7 @@ export const readProducts: RequestHandler = async (req: Request, res: Response) 
     console.error('[albums.controller][readAlbums][Error] ', error);
     res.status(500).json({
       message: 'There was an error when fetching albums'
-    });
+     });
   }
 };
 

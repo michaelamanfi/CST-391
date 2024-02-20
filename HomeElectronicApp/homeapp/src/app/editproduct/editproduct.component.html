@@ -1,0 +1,64 @@
+<div class="form-wrapper" *ngIf="product">
+  <div class="form-container">
+    <form (ngSubmit)="onSubmit()" #editForm="ngForm">
+      <!-- Product ID (Read-Only) -->
+      <div class="form-group">
+        <label for="productId">Product ID</label>
+        <input id="productId" type="text" class="form-control" [(ngModel)]="product.productId" name="productId"
+          readonly>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" type="text" class="form-control" [(ngModel)]="product.name" name="name" required>
+      </div>
+
+      <!-- Brand -->
+      <div class="form-group">
+        <label for="brand">Brand</label>
+        <input id="brand" type="text" class="form-control" [(ngModel)]="product.brand" name="brand" required>
+      </div>
+
+      <!-- Category -->
+      <div class="form-group">
+        <label for="category">Category</label>
+        <input id="category" type="text" class="form-control" [(ngModel)]="product.category" name="category" required>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" class="form-control" rows="3" [(ngModel)]="product.description" name="description"
+          required></textarea>
+      </div>
+
+      <!-- Price -->
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" type="number" class="form-control" [(ngModel)]="product.price" name="price" required>
+      </div>
+
+      <!-- Quantity -->
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" class="form-control" [(ngModel)]="product.quantity" name="quantity" required>
+      </div>
+
+      <!-- URL -->
+      <div class="form-group">
+        <label for="url">URL</label>
+        <input id="url" type="text" class="form-control" [(ngModel)]="product.url" name="url">
+      </div>
+
+      <!-- Image URL -->
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input id="imageUrl" type="text" class="form-control" [(ngModel)]="product.imageUrl" name="imageUrl">
+      </div>
+
+      <button type="submit" class="btn btn-success">Save Changes</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+  </div>
+</div>

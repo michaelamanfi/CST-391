@@ -1,0 +1,49 @@
+<div class="form-wrapper">
+  <div class="form-container" *ngIf="!wasSubmitted">
+    <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input id="name" type="text" class="form-control" placeholder="Enter product name" [(ngModel)]="product.name"
+          name="name">
+      </div>
+      <div class="form-group">
+        <label for="brand">Brand</label>
+        <input id="brand" type="text" class="form-control" placeholder="Enter brand name" [(ngModel)]="product.brand"
+          name="brand">
+      </div>
+      <div class="form-group">
+        <label for="category">Category</label>
+        <input id="category" type="text" class="form-control" placeholder="Enter product category"
+          [(ngModel)]="product.category" name="category">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea id="description" rows="3" class="form-control" placeholder="Enter product description"
+          [(ngModel)]="product.description" name="description"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="price">Price</label>
+        <input id="price" type="number" class="form-control" placeholder="Enter product price"
+          [(ngModel)]="product.price" name="price">
+      </div>
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <input id="quantity" type="number" class="form-control" placeholder="Enter product quantity"
+          [(ngModel)]="product.quantity" name="quantity">
+      </div>
+      <div class="form-group">
+        <label for="url">URL</label>
+        <input id="url" type="text" class="form-control" placeholder="Enter product URL" [(ngModel)]="product.url"
+          name="url">
+      </div>
+      <div class="form-group">
+        <label for="imageUrl">Image URL</label>
+        <input id="imageUrl" type="text" class="form-control" placeholder="Enter product image URL"
+          [(ngModel)]="product.imageUrl" name="imageUrl">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+    </form>
+  </div>
+  <div *ngIf="wasSubmitted">Product was added successfully.</div>
+</div>

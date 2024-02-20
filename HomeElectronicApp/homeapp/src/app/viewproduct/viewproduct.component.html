@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <h2>Product List</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Brand</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr active *ngFor="let product of products">
+        <td>{{ product.productId }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.brand }}</td>
+        <td>{{ product.category }}</td>
+        <td>{{ product.description }}</td>
+        <td>${{ product.price }}</td>
+        <td>{{ product.quantity }}</td>
+        <td>
+          <a [routerLink]="['/edit', product.productId]" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>
+            Edit</a>
+        <!-- Use a click event handler to confirm the deletion -->
+        <a href="javascript:void(0);" class="btn btn-sm btn-danger" (click)="confirmDelete(product.productId)">
+          <i class="fa fa-trash"></i> Delete
+        </a>
+
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,13 @@
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Use 100% of the viewport height */
+}
+
+.form-container {
+  width: 100%; /* Adjust width as needed */
+  max-width: 500px; /* Example max-width, adjust as needed */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional: adds shadow for better visibility */
+}
