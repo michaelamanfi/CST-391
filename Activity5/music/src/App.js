@@ -1,54 +1,94 @@
-import React, { useState } from 'react';
-import Card from './Card';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+//import Card from './Card';
 import './App.css';
+//import albums from './albums.json';
+//import SearchForm from './SearchForm';
+import dataSource from './dataSource';
+import SearchAlbum from './SearchAlbum';
+import NavBar from './NavBar';
+import NewAlbum from './NewAlbum';
+import OneAlbum from './OneAlbum';
 
 const App = () => {
-    const [albumList, setAlbumList] = useState([
-        {
-            artistId: 0,
-            artist: 'The Beatles',
-            title: 'Yellow Submarine',
-            description:
-                'Yellow Submarine is the tenth studio album by English rock band the Beatles, released on 13 January 1969 in the United States and on 17 January 1969 in the United Kingdom.',
-            year: 1969,
-            image:
-                'https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg',
-        },
-        {
-            artistId: 1,
-            artist: 'The Beatles',
-            title: 'Abbey Road',
-            description:
-                'Abbey Road is the eleventh studio album by English rock band the Beatles, released on 26 September 1969 in the United Kingdom and on 1 October 1969 in the United States.',
-            year: 1969,
-            image:
-                'https://upload.wikimedia.org/wikipedia/en/4/42/Beatles_-_Abbey_Road.jpg',
-        },
-        {
-            artistId: 2,
-            artist: 'The Beatles',
-            title: 'Let It Be',
-            description:
-                '"Let It Be" is the twelfth and final studio album by the Beatles. It was released on 8 May 1970, almost a month after the group\'s break-up.',
-            year: 1970,
-            image:
-                'https://upload.wikimedia.org/wikipedia/en/2/25/LetItBe.jpg',
-        },
-    ]);
+    const [searchPhrase, setSearchPhrase] = useState('');
+    const [albumList, setAlbumList] = useState([]);    
+    const [currentlySelectedAlbumId, setCurrentlySelectedAlbumId] = useState(0);
 
-    const renderedList = () => {
-        return albumList.map((album) => (
-            <Card
-                key={album.artistId}
-                albumTitle={album.title}
-                albumDescription={album.description}
-                buttonText="OK"
-                imageURL={album.image}
+    const updateSearchResults = (phrase) => {
+        console.log('phrase is ' + phrase);
+        setSearchPhrase(phrase);
+      };
+
+  // Setup initialization callback
+  useEffect(() => {
+    // Update the album list
+    loadAlbums();
+  }, [searchPhrase]);
+
+  const loadAlbums = async () => {
+    const response = await dataSource.get('/albums');
+    setAlbumList(response.data);
+  };
+
+      const updateSingleAlbum = (id, navigate) => {
+        console.log('Update Single Album = ', id);
+        console.log('Update Single Album = ', navigate);
+        var indexNumber = 0;
+        for (var i = 0; i < albumList.length; ++i) {
+          if (albumList[i].id === id) indexNumber = i;
+        }
+        setCurrentlySelectedAlbumId(indexNumber);
+        console.log('update path', '/show/' + indexNumber);
+        navigate('/show/' + indexNumber);
+      };
+      
+      const renderedList = () => {
+        return albumList.filter((album) => {
+          // Check if the album matches the searchPhrase or if the searchPhrase is empty
+          if (album.description.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+            searchPhrase === '') {
+            return true;
+          }
+          return false;
+        });
+      };
+/*
+  const renderedList = () => {
+    return albumList.map((album) => {
+      // Check if the album matches the searchPhrase or if the searchPhrase is empty
+      if (album.description.toLowerCase().includes(searchPhrase.toLowerCase()) ||
+        searchPhrase === '') {
+        return true;
+      }
+      return false; // Return null for albums that do not match the search criteria
+    }).filter(Boolean); // Filter out null values from the resulting array
+  };
+*/
+      return (
+        <BrowserRouter>
+          <NavBar />
+          <Routes>
+            <Route
+              exact
+              path='/'
+              element={
+                <SearchAlbum
+                  updateSearchResults={updateSearchResults}
+                  albumList={renderedList()}
+                  updateSingleAlbum={updateSingleAlbum}
+                />
+              }
             />
-        ));
-    };
-
-    return <div className="container">{renderedList()}</div>;
+            <Route exact path='/new' element={<NewAlbum />} />
+            <Route
+              exact path='/show/:albumId'
+              element={<OneAlbum album={albumList[currentlySelectedAlbumId]} />}
+            />
+          </Routes>
+        </BrowserRouter>
+      );
+      
 };
 
 export default App;
