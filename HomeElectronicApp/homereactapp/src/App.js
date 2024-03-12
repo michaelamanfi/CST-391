@@ -12,7 +12,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App = (props) => {
     const [searchPhrase, setSearchPhrase] = useState('');
     const [productList, setProductList] = useState([]);
-    const [currentlySelectedProductId, setCurrentlySelectedProductId] = useState(0);
+    //const [currentlySelectedProductId, setCurrentlySelectedProductId] = useState(0);
 
     const loadProducts = async () => {
         const response = await dataSource.get('/products');
@@ -30,8 +30,6 @@ const App = (props) => {
     };
 
     const updateSingleProduct = (productId, navigate, uri) => {
-        let indexNumber = productList.findIndex(product => product.productId === productId);
-        setCurrentlySelectedProductId(indexNumber);
         let path = uri + productId;
         navigate(path);
     };
@@ -63,8 +61,8 @@ const App = (props) => {
                     }
                 />
                 <Route path='/new' element={<NewProduct onNewProduct={onNewProduct} />} />
-                <Route path='/edit/:productId' element={<EditProduct onEditProduct={onEditProduct} product={productList[currentlySelectedProductId]}/>} />
-                <Route path='/view/:productId' element={<ViewProduct product={productList[currentlySelectedProductId]} />} />
+                <Route path='/edit/:productId' element={<EditProduct onEditProduct={onEditProduct} />} />                
+                <Route path='/view/:productId' element={<ViewProduct/>} />
             </Routes>
         </BrowserRouter>
     );

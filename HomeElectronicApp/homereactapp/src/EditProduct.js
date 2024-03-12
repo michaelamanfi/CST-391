@@ -1,26 +1,39 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import dataSource from './dataSource.js';
 
-const EditProduct = (props) => {
+const EditProduct = () => {
     const navigate = useNavigate();
-
-    // Initialize state with the product data from props
-    const [productData, setProductData] = useState({
-        productId: props.product?.productId,
-        name: props.product?.name || '',
-        brand: props.product?.brand || '',
-        category: props.product?.category || '',
-        description: props.product?.description || '',
-        price: props.product?.price || 0,
-        quantity: props.product?.quantity || 0,
-        imageUrl: props.product?.imageUrl || '',
+    // Get the productId from the Url
+    const { productId } = useParams();
+    
+    const [product, setProduct] = useState({
+        productId: 0,
+        name: '',
+        brand: '',
+        category: '',
+        description: '',
+        price: 0,
+        quantity: 0,
+        imageUrl: '',
     });
+
+    useEffect(() => {
+        // Load the product to edit
+        dataSource.get(`/products?productId=${productId}`)
+            .then(response => {
+                console.log("API Response: ", response);
+                setProduct(response.data[0]);
+            })
+            .catch(error => {
+                console.error('Error fetching product data:', error);                
+            });
+    }, [productId]);
 
     // Handler for form inputs change
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setProductData(prevData => ({
+        setProduct(prevData => ({
             ...prevData,
             [name]: value,
         }));
@@ -29,10 +42,10 @@ const EditProduct = (props) => {
     // Handler for form submission
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-        console.log("Form submission data:", productData);
+        console.log("Form submission data:", product);
 
         // Update product
-        let response= await dataSource.put(`/products`, productData); 
+        let response= await dataSource.put(`/products`, product); 
         console.log("Response data:", response.data);
         
         navigate("/");
@@ -45,7 +58,7 @@ const EditProduct = (props) => {
     };
 
     return (
-        <div key={productData.productId} className="container">
+        <div key={product.productId} className="container">
             <form onSubmit={handleFormSubmit}>
                 <h1>Edit Product</h1>
                 <div className="form-group">
@@ -55,7 +68,7 @@ const EditProduct = (props) => {
                         className="form-control"
                         id="name"
                         name="name"
-                        value={productData.name}
+                        value={product.name}
                         onChange={handleChange}
                         placeholder="Enter product name"
                     />
@@ -66,7 +79,7 @@ const EditProduct = (props) => {
                         className="form-control"
                         id="brand"
                         name="brand"
-                        value={productData.brand}
+                        value={product.brand}
                         onChange={handleChange}
                         placeholder="Enter brand"
                     />
@@ -77,7 +90,7 @@ const EditProduct = (props) => {
                         className="form-control"
                         id="category"
                         name="category"
-                        value={productData.category}
+                        value={product.category}
                         onChange={handleChange}
                         placeholder="Enter category"
                     />
@@ -87,7 +100,7 @@ const EditProduct = (props) => {
                         className="form-control"
                         id="description"
                         name="description"
-                        value={productData.description}
+                        value={product.description}
                         onChange={handleChange}
                         placeholder="Enter description"
                     />
@@ -98,7 +111,7 @@ const EditProduct = (props) => {
                         className="form-control"
                         id="price"
                         name="price"
-                        value={productData.price}
+                        value={product.price}
                         onChange={handleChange}
                         placeholder="Enter price"
                     />
@@ -109,7 +122,7 @@ const EditProduct = (props) => {
                         className="form-control"
                         id="quantity"
                         name="quantity"
-                        value={productData.quantity}
+                        value={product.quantity}
                         onChange={handleChange}
                         placeholder="Enter quantity"
                     />
@@ -120,14 +133,14 @@ const EditProduct = (props) => {
                         className="form-control"
                         id="imageUrl"
                         name="imageUrl"
-                        value={productData.imageUrl}
+                        value={product.imageUrl}
                         onChange={handleChange}
                         placeholder="Enter image URL"
                     />
                 </div>
                 <div align="center">
                     <button type="button" className="btn btn-warning" onClick={handleCancel}>Cancel</button>
-                    <button type="submit" className="btn btn-primary">Submit</button>
+                    <button type="submit" className="btn btn-primary">Save Changes</button>
                 </div>
             </form>
         </div>

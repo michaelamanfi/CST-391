@@ -8,7 +8,7 @@ const ProductList = (props) => {
 
     const handleSelection = (productId) => {
         console.log('Selected ID is ' + productId);
-        navigate(`/edit/${productId}`); // Assuming you have a route set up for product details
+        navigate(`/edit/${productId}`);
     };
 
     console.log('props productList', props);
