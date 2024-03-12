@@ -1,7 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Card from './Card';
-import App from './App'; // Adjust the path as necessary to where your App component is defined
-
+import App from "./App.js";
 
 ReactDOM.render(<App />, document.querySelector("#root"));
