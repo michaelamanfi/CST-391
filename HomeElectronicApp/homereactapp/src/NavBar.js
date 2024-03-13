@@ -1,8 +1,12 @@
+// Imports necessary dependencies from the 'react' library and the 'Link' component from 'react-router-dom'.
+// 'Link' is used for navigation between components without a full page reload, preserving the SPA behavior.
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+// Defines the NavBar functional component.
 const NavBar = () => {
     return (
+        // Utilizes Bootstrap classes for styling and behavior. This 'nav' element acts as the container for the navigation bar.
         <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <span className='navbar-brand'>
                 Home Electronics App

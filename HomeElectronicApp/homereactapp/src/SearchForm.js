@@ -1,17 +1,23 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 
-const SearchForm = (props) => { 
-    const [inputText, setInputText] = useState(""); 
+const SearchForm = (props) => {
+    // State hook to keep track of the input text value.
+    const [inputText, setInputText] = useState("");
 
-    const handleChangeInput = (event) => { 
-        setInputText(event.target.value); 
-    }; 
+    // Event handler for changes in the input field. Updates the inputText state.
+    const handleChangeInput = (event) => {
+        setInputText(event.target.value);
+    };
 
-    const handleFormSubmit = (event) => { 
-        event.preventDefault(); 
-        props.onSubmit(inputText); 
-    }; 
-    
+    // Event handler for form submission. Prevents the default form submit action,
+    // and calls the onSubmit prop function, passing the current input text as an argument.
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
+        props.onSubmit(inputText);
+    };
+
+    // Rendering logic for the SearchForm component.
+    // The form includes an input field for the search term and a submit button.    
     return ( 
         <div> 
             <form onSubmit={handleFormSubmit}> 

@@ -4,10 +4,9 @@ import dataSource from './dataSource';
 
 const ViewProduct = () => {
     const navigate = useNavigate();
+    const { productId } = useParams(); // Extracts productId from URL parameters.
 
-    // Get the productId from the Url
-    const { productId } = useParams();
-
+    // State for storing the current product's details.
     const [product, setProduct] = useState({
         productId: 0,
         name: '',
@@ -19,11 +18,12 @@ const ViewProduct = () => {
         imageUrl: '',
     });
 
+    // Effect hook to fetch product details from the dataSource based on the productId.
     useEffect(() => {
-        // Load the product to view
         dataSource.get(`/products?productId=${productId}`)
             .then(response => {
                 console.log("API Response: ", response);
+                // Response data is an array, takes the first item.
                 setProduct(response.data[0]);
             })
             .catch(error => {
@@ -31,8 +31,9 @@ const ViewProduct = () => {
             });
     }, [productId]);
 
+    // Function to navigate back to the home page.
     const handleBack = () => {
-        navigate('/'); // Navigates back to the home page
+        navigate('/');
     };
 
     return (

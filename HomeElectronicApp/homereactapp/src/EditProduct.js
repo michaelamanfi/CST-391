@@ -4,9 +4,9 @@ import dataSource from './dataSource.js';
 
 const EditProduct = () => {
     const navigate = useNavigate();
-    // Get the productId from the Url
-    const { productId } = useParams();
+    const { productId } = useParams(); // Extracts productId from the URL.
     
+    // State for holding and managing the product's data.
     const [product, setProduct] = useState({
         productId: 0,
         name: '',
@@ -18,11 +18,12 @@ const EditProduct = () => {
         imageUrl: '',
     });
 
+    // Fetches the product's details on component mount or when productId changes.
     useEffect(() => {
-        // Load the product to edit
         dataSource.get(`/products?productId=${productId}`)
             .then(response => {
                 console.log("API Response: ", response);
+                // Assuming the response contains the product data in an array, sets the first item to state.
                 setProduct(response.data[0]);
             })
             .catch(error => {
@@ -30,7 +31,7 @@ const EditProduct = () => {
             });
     }, [productId]);
 
-    // Handler for form inputs change
+    // Updates the product state with the new value whenever an input field is changed.
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProduct(prevData => ({
@@ -39,24 +40,25 @@ const EditProduct = () => {
         }));
     };
 
-    // Handler for form submission
+    // Submits the updated product details. Prevents default form action, logs the submission data, and updates the product in the data source.
     const handleFormSubmit = async (event) => {
         event.preventDefault();
         console.log("Form submission data:", product);
 
-        // Update product
         let response= await dataSource.put(`/products`, product); 
         console.log("Response data:", response.data);
         
+        // Navigates back to the homepage and forces a page reload.
         navigate("/");
-        window.location.reload(); // Force the page to reload
+        window.location.reload();
     };
 
-    // Handler to cancel form submission and navigate back
+    // Navigates back without making any changes.
     const handleCancel = () => {
         navigate("/");
     };
 
+    // Render the edit form.
     return (
         <div key={product.productId} className="container">
             <form onSubmit={handleFormSubmit}>
