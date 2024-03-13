@@ -35,8 +35,7 @@ const ProductList = (props) => {
     });
 
     // The return statement renders the list of Product components inside a div container.
-    // The container is styled to display its children (Product components) in a flex layout with wrapping enabled,
-    // and with a gap of 20px between each product for better visual separation.
+    // The container is styled to display its children (Product components) in a flex layout with wrapping enabled, and with a gap of 20px between each product for better visual separation.
     return <div className='container' style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>{products}</div>;
 };
 

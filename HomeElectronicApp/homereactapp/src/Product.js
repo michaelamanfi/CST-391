@@ -27,8 +27,8 @@ const Product = ({ productId, productName, productDescription, price, imageUrl }
             await dataSource.delete(`/products/${productId}`);
            
             // After deletion, navigate back to the home page and force a full page reload to update the UI.
-            navigate('/'); // Navigate to the home page
-            window.location.reload(); // Force the page to reload
+            navigate('/');
+            window.location.reload();
         }
     }; 
 
